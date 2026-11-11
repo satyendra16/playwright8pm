@@ -1,0 +1,35 @@
+import{test,expect} from '@playwright/test'
+ import { POManager } from '../pageObject/POManager'
+ import testdata from '../utils/data.json'
+
+  testdata.forEach((data)=>
+{
+test(`registration ${data.username}`,async({page})=>
+{
+    
+    const pomanager=new POManager(page)
+     const homepage=pomanager.getHomePage()
+     await homepage.goTo()
+     await homepage.clickOnRegisterLink()
+
+     const registerpage=pomanager.getRegistrationPage()
+      await registerpage.registerUser(
+       data.firstname,
+       data.lastname,
+       data.address,
+       data.city,
+       data.state,
+       data.zipcode,
+       data.phonenumber,
+       data.ssn,
+       data.username,
+       data.password,
+       data.confirmpassword
+
+      )
+      await registerpage.clickOnRegisterbutton()
+
+      //await expect(page).toHaveURL('https://parabank.parasoft.com/parabank/register.htm')
+})
+
+})
